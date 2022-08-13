@@ -9,7 +9,6 @@ export function Header() {
     <Flex
       as="header"
       w="100%"
-      // maxWidth={1440}
       bg="gray.700"
       h={200}
       mx="auto"
@@ -24,6 +23,7 @@ export function Header() {
         top="10"
         left="10"
         position="absolute"
+        color={'purple'}
         fontSize={24}
         cursor="pointer"
         onClick={() => navigate('/')}
