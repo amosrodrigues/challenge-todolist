@@ -1,28 +1,24 @@
 import {
-  Button,
-  Text,
   HStack,
-  Icon,
-  Input,
   Stack,
   Center,
-  Image,
-  Flex,
-  Box,
+  Text,
+  Checkbox,
+  Button,
 } from '@chakra-ui/react';
 import { Header } from '../../components/Header/Header';
-import { BsPlusCircle } from 'react-icons/bs';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import * as zod from 'zod';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useState } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { NewTaskForm } from './components/NewTaskForm';
 import { SummaryTasks } from './components/SummaryTasks';
 import { EmptyTasks } from './components/EmptyTasks';
+import { CardTask } from './components/CardTask';
 
 type NewTask = {
   id: string;
@@ -37,7 +33,14 @@ const newTaskFormSchema = zod.object({
 export type NewTaskFormData = zod.infer<typeof newTaskFormSchema>;
 
 export function Home() {
-  const [tasks, setTasks] = useState<NewTask[]>([]);
+  const [tasks, setTasks] = useState<NewTask[]>(() => {
+    const tasksLocal = localStorage.getItem('@ignite:challenge01');
+    if (tasksLocal) {
+      return JSON.parse(tasksLocal);
+    } else {
+      localStorage.setItem('@ignite:challenge01', JSON.stringify([]));
+    }
+  });
 
   const newTaskForm = useForm<NewTaskFormData>({
     resolver: zodResolver(newTaskFormSchema),
@@ -46,23 +49,60 @@ export function Home() {
     },
   });
 
+  const { handleSubmit, reset } = newTaskForm;
+
   function handleCreateNewTask(data: NewTaskFormData) {
     const newTask = {
       id: uuidv4(),
-      title: data.task,
+      task: data.task,
       isComplete: false,
     };
 
     setTasks((state) => [...state, newTask]);
+
+    reset();
   }
 
-  const { handleSubmit } = newTaskForm;
+  function handleCheckedTask(taskId: string) {
+    setTasks((state) => {
+      return state.map((task) => {
+        if (task.id === taskId) {
+          task.isComplete = !task.isComplete;
+          return task;
+        }
+        return task;
+      });
+    });
+  }
+
+  function handleDeleteTask(taskId: string) {
+    setTasks((state) => state.filter((task) => task.id !== taskId));
+  }
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(tasks);
+    localStorage.setItem('@ignite:challenge01', stateJSON);
+  }, [tasks]);
+
+  const infoTasks = useMemo(() => {
+    return {
+      total: tasks.length,
+      done: tasks.reduce(
+        (acc, task) => (task.isComplete ? (acc += 1) : acc),
+        0,
+      ),
+    };
+  }, [tasks]);
 
   return (
     <Center flexDirection="column">
       <Header />
 
-      <Stack width="min(90vw, 46rem)" margin="-1.75rem 2rem" spacing={16}>
+      <Stack
+        width="min(90vw, 46rem)"
+        margin="-1.75rem 2rem"
+        marginBottom={8}
+        spacing={16}>
         <HStack
           as="form"
           height="54px"
@@ -72,10 +112,22 @@ export function Home() {
           </FormProvider>
         </HStack>
 
-        <Stack spacing={4}>
-          <SummaryTasks />
+        <Stack spacing={2}>
+          <SummaryTasks infoTasks={infoTasks} />
 
-          <EmptyTasks />
+          {tasks.length === 0 ? (
+            <EmptyTasks />
+          ) : (
+            tasks.map((item) => {
+              return (
+                <CardTask
+                  item={item}
+                  onDeleteTask={handleDeleteTask}
+                  onCheckedTask={handleCheckedTask}
+                />
+              );
+            })
+          )}
         </Stack>
       </Stack>
     </Center>

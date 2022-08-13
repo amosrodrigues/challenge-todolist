@@ -36,6 +36,43 @@ export const theme = extendTheme({
         bg: 'gray.600',
         color: 'gray.50',
       },
+      '::-webkit-scrollbar': {
+        width: '0.375rem',
+        height: '0.375rem',
+        marginRight: '10px',
+      },
+      '::-webkit-scrollbar-corner': {
+        border: 'none',
+        background: 'none',
+      },
+      '::-webkit-scrollbar-thumb': {
+        backgroundColor: '#3D3C42',
+        borderRadius: '3px',
+        cursor: 'move',
+      },
+    },
+  },
+  components: {
+    Checkbox: {
+      baseStyle: {
+        icon: {
+          color: 'white',
+        },
+        control: {
+          border: '2px',
+          borderColor: 'blue.100',
+          borderRadius: 'full',
+          _disabled: {
+            borderColor: 'gray.300',
+            bg: 'gray.200',
+          },
+          _checked: { borderColor: 'purpleDark', bg: 'purpleDark' },
+        },
+        label: {
+          fontWeight: 'medium',
+          color: 'gray.900',
+        },
+      },
     },
   },
 });
