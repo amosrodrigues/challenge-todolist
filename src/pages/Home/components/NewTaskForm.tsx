@@ -23,12 +23,11 @@ export function NewTaskForm() {
         type="submit"
         colorScheme="blue"
         size="lg"
-        gap={2}
         padding={4}
         height="100%"
+        rightIcon={<BsPlusCircle size={20} />}
         disabled={isSubmitDisable}>
         Criar
-        <Icon as={BsPlusCircle} fontSize={20} />
       </Button>
     </>
   );
