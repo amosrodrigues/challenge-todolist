@@ -2,7 +2,10 @@
   "name": "todolist",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://amosrodrigues.github.io/challenge-todolist",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -13,6 +16,7 @@
     "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.9.1",
     "framer-motion": "^6.3.11",
+    "gh-pages": "^4.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.32.2",
