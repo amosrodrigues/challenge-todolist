@@ -67,7 +67,7 @@ export function CardTask({ item, onCheckedTask, onDeleteTask }: CardTaskProps) {
           <Icon as={FiAlertCircle} fontSize={60} color="danger" marginTop={8} />
           <ModalHeader>Tem certeza?</ModalHeader>
           <ModalBody>Você não poderá reverter isso!</ModalBody>
-          <ModalFooter gap={3}>
+          <ModalFooter gap={3} marginBottom={3}>
             <Button
               colorScheme="blue"
               onClick={() => {
