@@ -7,6 +7,7 @@ import { Input } from '../../components/Form/Input';
 import { Image } from '@chakra-ui/react';
 
 import logo from '../../assets/Logo.svg';
+import { InputPassword } from '../../components/Form/InputPasswrod';
 
 type SignInFormData = {
   email?: string;
@@ -64,7 +65,7 @@ export function SignIn() {
             error={errors.email}
             {...register('email')}
           />
-          <Input
+          <InputPassword
             type="password"
             label="Senha"
             placeholder="123456"
@@ -74,7 +75,7 @@ export function SignIn() {
         </Stack>
         <Button
           type="submit"
-          mt="6"
+          mt={3}
           colorScheme="blue"
           size="lg"
           isLoading={formState.isSubmitting}>
