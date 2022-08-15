@@ -38,7 +38,12 @@ export function SignIn() {
   };
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex
+      w="100vw"
+      h="100vh"
+      align="center"
+      justify="center"
+      bgGradient={['linear(to-l, gray.900, blue.900, gray.900)']}>
       <Flex
         as="form"
         width="100%"
