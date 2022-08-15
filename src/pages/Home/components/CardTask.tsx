@@ -54,7 +54,7 @@ export function CardTask({ item, onCheckedTask, onDeleteTask }: CardTaskProps) {
         display="flex"
         _hover={{ color: 'red.500', bg: 'gray.400' }}
         onClick={onOpen}
-        icon={<FiTrash2 />}
+        icon={<FiTrash2 size="20px" />}
       />
 
       <Modal
