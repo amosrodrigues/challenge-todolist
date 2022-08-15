@@ -1,5 +1,19 @@
-import { Button, Checkbox, HStack, Text } from '@chakra-ui/react';
-import { FiTrash2 } from 'react-icons/fi';
+import {
+  Button,
+  Checkbox,
+  HStack,
+  Icon,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { FiAlertCircle, FiTrash2 } from 'react-icons/fi';
 
 type CardTaskProps = {
   item: {
@@ -12,6 +26,7 @@ type CardTaskProps = {
 };
 
 export function CardTask({ item, onCheckedTask, onDeleteTask }: CardTaskProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <HStack
       alignItems="center"
@@ -32,14 +47,40 @@ export function CardTask({ item, onCheckedTask, onDeleteTask }: CardTaskProps) {
         flex="1">
         {item.task}
       </Text>
-      <Button
+      <IconButton
         variant="unstyled"
         aria-label="exclude"
         color="gray.300"
         display="flex"
-        rightIcon={<FiTrash2 size={20} />}
-        onClick={() => onDeleteTask(item.id)}
+        _hover={{ color: 'red.500', bg: 'gray.400' }}
+        onClick={onOpen}
+        icon={<FiTrash2 />}
       />
+
+      <Modal
+        isCentered
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="gray.800" alignContent="center" alignItems="center">
+          <Icon as={FiAlertCircle} fontSize={60} color="danger" marginTop={8} />
+          <ModalHeader>Tem certeza?</ModalHeader>
+          <ModalBody>Você não poderá reverter isso!</ModalBody>
+          <ModalFooter gap={3}>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                onDeleteTask(item.id), onClose();
+              }}>
+              Sim, exclua!
+            </Button>
+            <Button colorScheme="red" onClick={onClose}>
+              Cancelar!
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </HStack>
   );
 }

@@ -62,6 +62,10 @@ export const theme = extendTheme({
           border: '2px',
           borderColor: 'blue.100',
           borderRadius: 'full',
+          _hover: {
+            borderColor: 'blue.300',
+            bg: 'gray.400',
+          },
           _disabled: {
             borderColor: 'gray.300',
             bg: 'gray.200',
