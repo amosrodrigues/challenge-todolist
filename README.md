@@ -90,7 +90,7 @@ Sobre o desenvolvimento (conceitos e fundamentos):
 
 3. Crie uma branch a partir da branch `main` conforme preferir.
 
-4. Rode os senguinte comando para iniciar a aplicação: 🎲
+4. Rode o senguinte comando para iniciar a aplicação: 🎲
 
 - `npm run dev`
 
